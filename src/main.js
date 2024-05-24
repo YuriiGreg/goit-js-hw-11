@@ -41,6 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     } finally {
       showLoader(false);
+      form.reset(); 
     }
   });
 
