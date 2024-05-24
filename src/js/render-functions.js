@@ -1,21 +1,30 @@
-function renderImages(images) {
-  const imageCards = images.map(image => `
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
+
+export function renderImages(images, gallery) {
+  const markup = images.map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => `
     <li>
-      <a href="${image.largeImageURL}">
-        <img src="${image.webformatURL}" alt="${image.tags}" />
-        <div class="info">
-          <p>Likes: ${image.likes}</p>
-          <p>Views: ${image.views}</p>
-          <p>Comments: ${image.comments}</p>
-          <p>Downloads: ${image.downloads}</p>
-        </div>
+      <a href="${largeImageURL}">
+        <img src="${webformatURL}" alt="${tags}" />
       </a>
+      <div class="info">
+        <p><b>Likes</b> ${likes}</p>
+        <p><b>Views</b> ${views}</p>
+        <p><b>Comments</b> ${comments}</p>
+        <p><b>Downloads</b> ${downloads}</p>
+      </div>
     </li>
-  `).join('');
-  gallery.innerHTML = imageCards;
-  new SimpleLightbox('.gallery a', { /* options */ }).refresh();
+  `).join("");
+  
+  gallery.innerHTML = markup;
+
+  const lightbox = new SimpleLightbox(".gallery a");
+  lightbox.refresh();
 }
 
-function showLoader(show) {
-  loader.classList.toggle('hidden', !show);
+export function clearGallery(gallery) {
+  gallery.innerHTML = "";
 }
+
+
+
