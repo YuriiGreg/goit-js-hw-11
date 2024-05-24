@@ -2,12 +2,16 @@ import { fetchImages } from "./js/pixabay-api";
 import { renderImages, clearGallery } from "./js/render-functions";
 import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
 
-document.addEventListener('DOMContentLoaded', () => {
+
   const form = document.getElementById("search-form");
   const input = document.getElementById("search-input");
   const gallery = document.getElementById("gallery");
-  const loader = document.getElementById("loader");
+const loader = document.getElementById("loader");
+  
+const lightbox = new SimpleLightbox('.gallery a');
 
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -23,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     clearGallery(gallery);
 
     showLoader(true);
+    
     try {
       const data = await fetchImages(query);
       if (data.hits.length === 0) {
@@ -53,6 +58,5 @@ document.addEventListener('DOMContentLoaded', () => {
       loader.classList.add("hidden");
       loader.style.display = "none";
     }
-  }
-});
+};
 
